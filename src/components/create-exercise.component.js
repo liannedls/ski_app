@@ -6,33 +6,18 @@ export default class CreateExercise extends Component {
   constructor(props) {
     super(props);
     
-    this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeGroup = this.onChangeGroup.bind(this);
     this.onChangeSkill = this.onChangeSkill.bind(this);
     this.onChangeAge = this.onChangeAge.bind(this);
+    this.onChangeExercisenum = this.onChangeExercisenum.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      name: '',
-      description: '',
-      groups: ['children', 'adults', 'both'],
-      skills: ['children', 'adults', 'both'],
-      ages: ['children', 'adults', 'both'],
+      groups: ['Private', 'Group'],
+      skills: ['First Timer', 'Beginner', 'Intermediate', 'Advanced'],
+      ages: ['Children', 'Adults', 'Both'],
       exercisenums: [1,2,3,4,5]
     }
-  }
-
-  onChangeName(e) {
-    this.setState({
-      name: e.target.value
-    })
-  }
-
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    })
   }
 
   onChangeGroup(e) {
@@ -53,15 +38,20 @@ export default class CreateExercise extends Component {
     })
   }
 
+  onChangeExercisenum(e) {
+    this.setState({
+      age: e.target.value
+    })
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
     const exercise = {
-      name : this.state.username,
-      description : this.state.description,
       group : this.state.group,
       skill : this.state.skill,
       ages : this.state.ages,
+      exercisenum : this.state.exercisenum
     }
 
     console.log(exercise);
