@@ -8,18 +8,20 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
+  const name = req.body.name;
   const description = req.body.description;
-  const duration = Number(req.body.duration);
-  const date = Date.parse(req.body.date);
+  const group = req.body.group;
+  const skill = req.body.skill;
+  const age = req.body.age;
 
   const newExercise = new Exercise({
-    username,
+    name,
     description,
-    duration,
-    date,
+    group,
+    skill,
+    age,
   });
-
+  
   newExercise.save()
   .then(() => res.json('Exercise added!'))
   .catch(err => res.status(400).json('Error: ' + err));
@@ -40,10 +42,11 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
   Exercise.findById(req.params.id)
     .then(exercise => {
-      exercise.username = req.body.username;
+      exercise.name = req.body.name;
       exercise.description = req.body.description;
-      exercise.duration = Number(req.body.duration);
-      exercise.date = Date.parse(req.body.date);
+      exercise.group = req.body.group;
+      exercise.skill = req.body.skill;
+      exercise.age = req.body.age;
 
       exercise.save()
         .then(() => res.json('Exercise updated!'))
