@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
 
 export default class Results extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {test: "Ford"};
+
+      }
+
+    componentDidMount(){
+        
+    console.log('Component Did Mount: WORKING');
+    
+    this.setState({test : this.props.location.state.exercise.name} )
+    }
 
   render() {
     return (
       <div>
-        <h3>Logged Exercises</h3>
+        <h3>{this.state.test}</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>Name</th>
               <th>Description</th>
               <th>Group</th>
               <th>Skill</th>

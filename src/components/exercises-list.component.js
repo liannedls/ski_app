@@ -18,6 +18,12 @@ export default class ExercisesList extends Component {
     this.state = {exercises: []};
   }
 
+  exerciseList() {
+    return this.state.exercises.map(currentexercise => {
+      return <Exercise exercise={currentexercise} key={currentexercise._id}/>;
+    })
+  }
+
   componentDidMount() {
     axios.get('http://localhost:5000/exercises/')
       .then(response => {
@@ -26,13 +32,7 @@ export default class ExercisesList extends Component {
       .catch((error) => {
         console.log(error);
       })
-  }
-
-
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} key={currentexercise._id}/>;
-    })
+      
   }
 
   render() {

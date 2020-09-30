@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+
 //import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class CreateExercise extends Component {
+  
   constructor(props) {
     super(props);
     
@@ -48,18 +50,18 @@ export default class CreateExercise extends Component {
     e.preventDefault();
 
     const exercise = {
-      group : this.state.group,
-      skill : this.state.skill,
+      name : 'test',
+      group : this.state.groups,
+      skill : this.state.skills,
       ages : this.state.ages,
-      exercisenum : this.state.exercisenum
+      exercisenum : this.state.exercisenums
     }
 
-    console.log(exercise);
+    this.props.history.push({ 
+      pathname: '/results',
+      state: {exercise: exercise}
+    }); 
 
-    //axios.post('http://localhost:5000/exercises/add', exercise)
-    //  .then(res => console.log(res.data));
-
-    window.location = '/results';
   }
 
   render() {
@@ -122,7 +124,7 @@ export default class CreateExercise extends Component {
 
         <div className="form-group">
           <label>Number of Exercises</label>
-          <select ref="skillInput"
+          <select ref="exercisenumsInput"
               type="int" 
               className="form-control"
               value={this.state.duration}
