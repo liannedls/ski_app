@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import qs from 'qs';
 //import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
+import { Container, Row, Col } from 'reactstrap';
+
+const Exercise = props => (
+  <tr>
+    <td>{props.exercise.name}</td>
+    <td>{props.exercise.description}</td>
+    <td>{props.exercise.group}</td>
+    <td>{props.exercise.skill}</td>
+    <td>{props.exercise.age}</td>
+  </tr>
+)
 
 export default class CreateExercise extends Component {
   
@@ -18,13 +31,22 @@ export default class CreateExercise extends Component {
       groups: ['Private', 'Group'],
       skills: ['First Timer', 'Beginner', 'Intermediate', 'Advanced'],
       ages: ['Children', 'Adults', 'Both'],
-      exercisenums: [1,2,3,4,5]
+      exercisenums: [1,2,3,4,5],
+      exercises: [
+        {name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds"}
+      ],
+      group: "Private",
+      skill: "First Timer",
+      age: "Children",
+      num: 1
     }
+    
   }
 
   onChangeGroup(e) {
     this.setState({
       group: e.target.value
+
     })
   }
 
@@ -42,40 +64,45 @@ export default class CreateExercise extends Component {
 
   onChangeExercisenum(e) {
     this.setState({
-      age: e.target.value
+      num: e.target.value
     })
   }
 
   onSubmit(e) {
     e.preventDefault();
+    console.log(this.state)
+    axios.get('http://localhost:5000/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
+      .then(response => {
+        console.log(response.data)
+        this.setState({ exercises: response.data })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
-    const exercise = {
-      name : 'test',
-      group : this.state.groups,
-      skill : this.state.skills,
-      ages : this.state.ages,
-      exercisenum : this.state.exercisenums
-    }
-
-    this.props.history.push({ 
-      pathname: '/results',
-      state: {exercise: exercise}
-    }); 
-
+  exerciseList() {
+    return this.state.exercises.map(currentexercise => {
+      return <Exercise exercise={currentexercise} key={currentexercise._id}/>;
+    })
   }
 
   render() {
     return (
     <div>
       <h3>Create a Ski Lesson Plan</h3>
+      <Container>
+        
       <form onSubmit={this.onSubmit}>
-
+      <Row> 
+      <Col>
         <div className="form-group"> 
+        
           <label>Age </label>
           <select ref="userInput"
               className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}>
+              value={this.state.age}
+              onChange={this.onChangeAge}>
               {
                 this.state.ages.map(function(age) {
                   return <option 
@@ -85,14 +112,16 @@ export default class CreateExercise extends Component {
                 })
               }
           </select>
-        </div>
 
+        </div>
+        </Col>
+        <Col>
         <div className="form-group"> 
           <label>Group Size </label>
           <select ref="groupInput"
               className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}>
+              value={this.state.group}
+              onChange={this.onChangeGroup}>
                               {
                 this.state.groups.map(function(group) {
                   return <option 
@@ -103,14 +132,14 @@ export default class CreateExercise extends Component {
               }
           </select>
         </div>
-
-        <div className="form-group">
+        </Col>
+        <Col>
           <label>Skill Level</label>
           <select ref="skillInput"
               type="text" 
               className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}>
+              value={this.state.skill}
+              onChange={this.onChangeSkill}>
                                               {
                 this.state.skills.map(function(skill) {
                   return <option 
@@ -120,15 +149,13 @@ export default class CreateExercise extends Component {
                 })
               }
           </select>
-        </div>
-
-        <div className="form-group">
+        </Col><Col>
           <label>Number of Exercises</label>
           <select ref="exercisenumsInput"
               type="int" 
               className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}>
+              value={this.state.num}
+              onChange={this.onChangeExercisenum}>
                                               {
                 this.state.exercisenums.map(function(exercisenum) {
                   return <option 
@@ -138,13 +165,37 @@ export default class CreateExercise extends Component {
                 })
               }
           </select>
-        </div>
+        </Col>
 
+        </Row>
+        <Row>
         <div className="form-group">
           <input type="submit" value="Create Ski Lesson Plan" className="btn btn-primary" />
         </div>
+      
+      </Row>
       </form>
+      
+      </Container>
+      <div>
+        <h3>Exercises</h3>
+        <table className="table">
+          <thead className="thead-light">
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Group</th>
+              <th>Skill</th>
+              <th>Age</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.exerciseList()}
+          </tbody>
+        </table>
+      </div>
     </div>
+    
     )
   }
 }
