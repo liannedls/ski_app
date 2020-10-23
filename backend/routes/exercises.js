@@ -1,22 +1,26 @@
 const router = require('express').Router();
+const { resetWarningCache } = require('prop-types');
 let Exercise = require('../models/exercise.model');
 
 router.route('/').get((req, res) => {
-  Exercise.find()
+  num = parseInt(req.query.num)
+  console.log(typeof num);
+  Exercise.find({group : req.query.group}).limit(num)
     .then(exercises => res.json(exercises))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
 router.route('/add').post((req, res) => {
   const name = req.body.name;
-  const description = req.body.description;
+  const num = req.body.num;
   const group = req.body.group;
   const skill = req.body.skill;
   const age = req.body.age;
 
   const newExercise = new Exercise({
     name,
-    description,
+    num,
     group,
     skill,
     age,
@@ -43,7 +47,7 @@ router.route('/update/:id').post((req, res) => {
   Exercise.findById(req.params.id)
     .then(exercise => {
       exercise.name = req.body.name;
-      exercise.description = req.body.description;
+      exercise.num = req.body.num;
       exercise.group = req.body.group;
       exercise.skill = req.body.skill;
       exercise.age = req.body.age;
