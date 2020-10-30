@@ -9,7 +9,6 @@
 }
 
 .App-header {
-  background-color: #d12cc3;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -30,8 +29,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.form-group {
-  color: #d12cc3;
 }

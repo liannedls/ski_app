@@ -82,7 +82,42 @@ export default class CreateExercise extends Component {
         
       <form onSubmit={this.onSubmit} className="">
       <Row> 
-      <Col className="">
+        <Col>
+        <div className="form-group"> 
+          <label>Group Size </label>
+          <select ref="groupInput"
+              className="form-control"
+              value={this.state.group}
+              onChange={this.onChangeGroup}>
+                              {
+                this.state.groups.map(function(group) {
+                  return <option 
+                    key={group}
+                    value={group}>{group}
+                    </option>;
+                })
+              }
+          </select>
+        </div>
+        </Col>
+        <Col>
+          <label>Skier Skill Level</label>
+          <select ref="skillInput"
+              type="text" 
+              className="form-control"
+              value={this.state.skill}
+              onChange={this.onChangeSkill}>
+                                              {
+                this.state.skills.map(function(skill) {
+                  return <option 
+                    key={skill}
+                    value={skill}>{skill}
+                    </option>;
+                })
+              }
+          </select>
+        </Col>
+        <Col className="">
         <div className="form-groups"> 
         
           <label>Age </label>
@@ -103,40 +138,6 @@ export default class CreateExercise extends Component {
         </div>
         </Col>
         <Col>
-        <div className="form-group"> 
-          <label>Group Size </label>
-          <select ref="groupInput"
-              className="form-control"
-              value={this.state.group}
-              onChange={this.onChangeGroup}>
-                              {
-                this.state.groups.map(function(group) {
-                  return <option 
-                    key={group}
-                    value={group}>{group}
-                    </option>;
-                })
-              }
-          </select>
-        </div>
-        </Col>
-        <Col>
-          <label>Skill Level</label>
-          <select ref="skillInput"
-              type="text" 
-              className="form-control"
-              value={this.state.skill}
-              onChange={this.onChangeSkill}>
-                                              {
-                this.state.skills.map(function(skill) {
-                  return <option 
-                    key={skill}
-                    value={skill}>{skill}
-                    </option>;
-                })
-              }
-          </select>
-        </Col><Col>
           <label>Number of Exercises</label>
           <select ref="exercisenumsInput"
               type="int" 
