@@ -5,16 +5,7 @@ import qs from 'qs';
 //import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col } from 'reactstrap';
-
-const Exercise = props => (
-  <tr>
-    <td>{props.exercise.name}</td>
-    <td>{props.exercise.description}</td>
-    <td>{props.exercise.group}</td>
-    <td>{props.exercise.skill}</td>
-    <td>{props.exercise.age}</td>
-  </tr>
-)
+import ExerciseList from './exercise-list.component.js'
 
 export default class CreateExercise extends Component {
   
@@ -79,24 +70,20 @@ export default class CreateExercise extends Component {
       .catch((error) => {
         console.log(error);
       })
-  }
-
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} key={currentexercise._id}/>;
-    })
+      this.setState({loadExercises:true})
   }
 
   render() {
+    const loadExercises= this.state.loadExercises;
     return (
     <div>
       <h3>Create a Ski Lesson Plan</h3>
       <Container>
         
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className="">
       <Row> 
-      <Col>
-        <div className="form-group"> 
+      <Col className="">
+        <div className="form-groups"> 
         
           <label>Age </label>
           <select ref="userInput"
@@ -168,34 +155,20 @@ export default class CreateExercise extends Component {
         </Col>
 
         </Row>
-        <Row>
-        <div className="form-group">
-          <input type="submit" value="Create Ski Lesson Plan" className="btn btn-primary" />
+        <Row className = "justify-content-center">
+        <div className="form-group ">
+          <input type="submit" value="Create Ski Lesson Plan" className="btn btn-dark" />
         </div>
       
       </Row>
       </form>
       
       </Container>
-      <div>
-        <h3>Exercises</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Group</th>
-              <th>Skill</th>
-              <th>Age</th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.exerciseList()}
-          </tbody>
-        </table>
+      {loadExercises ?
+      <ExerciseList exercises = {this.state.exercises} />
+      : null}
       </div>
-    </div>
-    
     )
   }
 }
+
