@@ -3,7 +3,7 @@ const { resetWarningCache } = require('prop-types');
 let Exercise = require('../models/exercise.model');
 
 router.route('/').get((req, res) => {
-  var num = parseInt(req.query.num)
+  var num = new parseInt(req.query.num)
   console.log(typeof num);
   Exercise.find({group : req.query.group}).limit(num)
     .then(exercises => res.json(exercises))
