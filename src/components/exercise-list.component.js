@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 
 const Exercise = props => (
@@ -13,10 +12,6 @@ const Exercise = props => (
 )
 
 export default class ExerciseList extends Component {
-  
-  constructor(props) {
-    super(props);    
-  }
 
   exerciseList() {
     return this.props.exercises.map(currentexercise => {
