@@ -11,7 +11,7 @@ function App() {
       <div className="container">
       <Navbar />
       <br/>
-      <Route path="/" component={CreateExercise} />
+      <Route path="/" exact component={CreateExercise} />
       </div>
     </Router>
   );
