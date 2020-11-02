@@ -62,7 +62,7 @@ export default class CreateExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
     console.log(this.state)
-    axios.get('https://polar-mesa-61059.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
+    axios.get('https://polar-mesa-61059.herokuapp.com/exercises',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
       .then(response => {
         console.log(response.data)
         this.setState({ exercises: response.data })
