@@ -19,9 +19,9 @@ export default class CreateExercise extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      groups: ['Private', 'Group'],
+      groups: ['Private', 'Group', 'All'],
       skills: ['First Timer', 'Beginner', 'Intermediate', 'Advanced'],
-      ages: ['Children', 'Adults', 'Both'],
+      ages: ['Children', 'Adults','All'],
       exercisenums: [1,2,3,4,5],
       exercises: [
         {name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds"}
@@ -62,6 +62,7 @@ export default class CreateExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
     console.log(this.state)
+    //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
     axios.get('http://localhost:5000/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
       .then(response => {
         console.log(response.data)
@@ -71,6 +72,7 @@ export default class CreateExercise extends Component {
         console.log(error);
       })
       this.setState({loadExercises:true})
+      //this.forceUpdate(e);
   }
 
   render() {
