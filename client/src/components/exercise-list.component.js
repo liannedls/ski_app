@@ -8,6 +8,7 @@ const Exercise = props => (
     <td>{props.exercise.group}</td>
     <td>{props.exercise.skill}</td>
     <td>{props.exercise.age}</td>
+    <td><a href={props.exercise.reference}>See More</a></td>
   </tr>
 )
 
@@ -32,6 +33,7 @@ export default class ExerciseList extends Component {
               <th>Group</th>
               <th>Skill</th>
               <th>Age</th>
+              <th>Reference</th>
             </tr>
           </thead>
           <tbody>

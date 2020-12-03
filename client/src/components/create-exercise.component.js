@@ -17,19 +17,20 @@ export default class CreateExercise extends Component {
     this.onChangeAge = this.onChangeAge.bind(this);
     this.onChangeExercisenum = this.onChangeExercisenum.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.loadAll = this.loadAll.bind(this);
 
     this.state = {
-      groups: ['Private', 'Group', 'All'],
-      skills: ['First Timer', 'Beginner', 'Intermediate', 'Advanced'],
-      ages: ['Children', 'Adults','All'],
+      groups: ['Group', 'All'],
+      skills: ['Beginner', 'Intermediate', 'Advanced', 'First Timer'],
+      ages: ['Any', 'Children'],
       exercisenums: [1,2,3,4,5],
       exercises: [
         {name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds"}
       ],
-      group: "Private",
-      skill: "First Timer",
-      age: "Children",
-      num: 1
+      group: "All",
+      skill: "Beginner",
+      age: "Any",
+      num: 5
     }
     
   }
@@ -64,6 +65,22 @@ export default class CreateExercise extends Component {
     console.log(this.state)
     //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
     axios.get('http://localhost:5000/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
+      .then(response => {
+        console.log(response.data)
+        this.setState({ exercises: response.data })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      this.setState({loadExercises:true})
+      //this.forceUpdate(e);
+  }
+
+  loadAll(e) {
+    e.preventDefault();
+
+    //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
+    axios.get('http://localhost:5000/exercises/all')
       .then(response => {
         console.log(response.data)
         this.setState({ exercises: response.data })
@@ -158,11 +175,15 @@ export default class CreateExercise extends Component {
         </Col>
 
         </Row>
-        <Row className = "justify-content-center">
+        <Row>
+        <button onClick={this.loadAll}>
+          See All
+        </button>
+          <Col className = "justify-content-center">
         <div className="form-group ">
           <input type="submit" value="Create Ski Lesson Plan" className="btn btn-dark" />
         </div>
-      
+        </Col>
       </Row>
       </form>
       
