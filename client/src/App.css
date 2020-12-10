@@ -36,3 +36,24 @@
   outline-offset: none !important;
   box-shadow: none;
 }
+
+ul.a {
+  list-style-type: circle;
+}
+
+h3{
+  text-indent: 5%;
+}
+
+.firsttimer {
+  
+  display: "flex";
+  justify-content: center;
+  align-items: center;
+}
+
+.firsttimer h1{
+  color:blue;
+  
+  text-align: center;
+}

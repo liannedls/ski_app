@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
-
-const Exercise = props => (
-  <tr>
-    <td>{props.exercise.name}</td>
-    <td>{props.exercise.description}</td>
-    <td>{props.exercise.group}</td>
-    <td>{props.exercise.skill}</td>
-    <td>{props.exercise.age}</td>
-    <td><a href={props.exercise.reference}>See More</a></td>
-  </tr>
-)
+import ExerciseElem from './exercise-elem.component.js'
 
 export default class ExerciseList extends Component {
 
   exerciseList() {
     return this.props.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} key={currentexercise._id}/>;
+      return <ExerciseElem exercise={currentexercise} key={currentexercise._id}/>;
     })
   }
 
@@ -34,6 +24,7 @@ export default class ExerciseList extends Component {
               <th>Skill</th>
               <th>Age</th>
               <th>Reference</th>
+              <th>Add to List</th>
             </tr>
           </thead>
           <tbody>

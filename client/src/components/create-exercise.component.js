@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import qs from 'qs';
 //import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col } from 'reactstrap';
@@ -189,7 +187,7 @@ export default class CreateExercise extends Component {
       
       </Container>
       {loadExercises ?
-      <ExerciseList exercises = {this.state.exercises} />
+      <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id}/>
       : null}
       </div>
     )
