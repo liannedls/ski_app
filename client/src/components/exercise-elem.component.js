@@ -7,21 +7,20 @@ export default class ExerciseElem extends Component {
         super(props);
         this.addto = this.addto.bind(this);
         this.state = {
-        count : 1,
-        checked : true,
-        data: "test data"
+        count : 1
     }
     }
 
     addto(e){
     e.preventDefault();
-    console.log("test" + this.state.checked + this.state.count);
-    this.setState({count : this.state.count+1,
-        checked: !e.target.checked}
-    )
-    if(this.state.checked === true){
-            console.log("yes")
-            localStorage.setItem('added2list', this.props.exercise._id)
+        console.log(localStorage.getItem('id_list'))
+        console.log(JSON.stringify(this.props.exercise._id))
+        const listIds = localStorage.getItem('id_list');
+        if(listIds.includes(JSON.stringify(this.props.exercise._id))){
+
+        }
+        else{
+        localStorage.setItem('id_list', listIds + "," + JSON.stringify(this.props.exercise._id))
         }
     }
 
@@ -35,8 +34,7 @@ export default class ExerciseElem extends Component {
         <td>{this.props.exercise.skill}</td>
         <td>{this.props.exercise.age}</td>
         <td><a href={this.props.exercise.reference}>See More</a></td>
-        on touchtouchtap needs to be used but change to something different
-        <td><button onClick={this.addto} value={this.state.checked}>Add!!</button></td>
+        <td><button onClick={this.addto} >Add!!</button></td>
     </tr> 
     )
   }

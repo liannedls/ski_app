@@ -9,21 +9,24 @@ export default class MyList extends Component {
         
         constructor(props) {
           super(props);
-          console.log(this.props)
           this.state = {
             newItem: "",
             list: [], 
             testy: "testtest",
             exercises: [
-              {name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds", _id:0}
+              {name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds", id: "First Timer"}
             ]
           };
         }
       
-        componentDidUpdate(){
-          console.log(this.state)
+        componentDidMount(){
+          console.log("hello")
+          
+          console.log("these are the props")
+          console.log(this.props)
+          //console.log(this.state.testy)
           //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
-          axios.get('http://localhost:5000/exercises/list',{params : {id:this.state.key}})
+          axios.get('http://localhost:5000/exercises/mylist',{params : {id : "testinggggg"}})
             .then(response => {
               console.log(response.data)
               this.setState({ exercises: response.data })
@@ -39,8 +42,7 @@ export default class MyList extends Component {
     return (
       <div className="App">
 
-        <header>{localStorage.getItem('testing')}</header>
-        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id}/>
+        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} idsStored = {this.props.idsStored}/>
 
       </div>
     );
