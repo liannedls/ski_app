@@ -25,4 +25,11 @@ router.route('/all').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));  
 });
 
+router.route('/mylist').get((req, res) => {
+  console.log(req.query.id)
+  Exercise.findById({_id : req.query.id})
+    .then(exercises => res.json(exercises))
+      .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
