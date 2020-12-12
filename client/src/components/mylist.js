@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
 //import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,40 +8,52 @@ export default class MyList extends Component {
         
         constructor(props) {
           super(props);
-          this.state = {
-            newItem: "",
+          this.handler = this.handler.bind(this)
+            this.state = {
+              newItem: "",
             list: [], 
+            data: [],
             testy: "testtest",
-            exercises: [
-              {name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds", id: "First Timer"}
-            ]
-          };
+              exercises: [
+                {_id:"fake",name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds"}
+              ]
+           }
         }
       
+        handler() {
+          this.setState({
+            someVar: 'some value'
+          })
+          console.log("rerender dammit!")
+          this.componentDidMount();
+        }
+
         componentDidMount(){
-          console.log("hello")
-          
-          console.log("these are the props")
-          console.log(this.props)
-          //console.log(this.state.testy)
-          //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
-          axios.get('http://localhost:5000/exercises/mylist',{params : {id : "testinggggg"}})
-            .then(response => {
-              console.log(response.data)
-              this.setState({ exercises: response.data })
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-            this.setState({loadExercises:true})
-            //this.forceUpdate(e);
+          const listIds = localStorage.getItem('id_list').split(',')
+          let data = []
+          if(listIds.length >=2 ){
+          for(const id of listIds){
+            const idclean = id.replace('\"','').replace('\"','')
+            console.log(idclean)
+            axios.get('http://localhost:5000/exercises/mylist',{params : {id : id.replace('\"','').replace('\"','')}})
+              .then(response => {
+                console.log(response.data)
+                this.setState({exercises:[...this.state.exercises, response.data]}) 
+                console.log(this.state.exercises)
+              })
+              .catch((error) => {
+                console.log(error);
+              })
+            
+            }
+            this.setState({exercises : data})
+          }
         }
 
   render() {
     return (
-      <div className="App">
-
-        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} idsStored = {this.props.idsStored}/>
+      <div className="Mylist">
+        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val={"del"} handler = {this.handler}/>
 
       </div>
     );

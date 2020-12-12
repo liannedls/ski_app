@@ -4,9 +4,14 @@ import ExerciseElem from './exercise-elem.component.js'
 
 export default class ExerciseList extends Component {
 
+  constructor(props) {
+    super(props)
+
+  }
+
   exerciseList() {
     return this.props.exercises.map(currentexercise => {
-      return <ExerciseElem exercise={currentexercise} key={currentexercise._id}/>;
+      return <ExerciseElem exercise={currentexercise} key={currentexercise._id} val={this.props.val} handler={this.props.handler} />;
     })
   }
 
@@ -14,7 +19,6 @@ export default class ExerciseList extends Component {
     return (
 
       <div>
-        <h3>Exercises</h3>
         <table className="table">
           <thead className="thead-dark">
             <tr>

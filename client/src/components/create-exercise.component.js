@@ -187,7 +187,7 @@ export default class CreateExercise extends Component {
       
       </Container>
       {loadExercises ?
-      <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id}/>
+      <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val = {"Add"}/>
       : null}
       </div>
     )
