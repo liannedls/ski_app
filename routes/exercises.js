@@ -32,4 +32,11 @@ router.route('/mylist').get((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/search').get((req, res) => {
+  console.log(req.query.text)
+  Exercise.find( { $text: { $search: req.query.text } } )
+    .then(exercises => res.json(exercises))
+      .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;

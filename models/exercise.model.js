@@ -9,6 +9,7 @@ const exerciseSchema = new Schema({
   skill : { type: String, required: true },
   age : { type: String, required: true },
 });
+exerciseSchema.index({'$**': 'text'});
 
 const Exercise = mongoose.model('Exercise', exerciseSchema);
 
