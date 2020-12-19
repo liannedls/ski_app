@@ -13,47 +13,59 @@ export default class ExerciseElem extends Component {
     }
 
     add(e){
-    e.preventDefault();
-        console.log(localStorage.getItem('id_list'))
-        console.log(JSON.stringify(this.props.exercise._id))
+        e.preventDefault();
+        
         const listIds = localStorage.getItem('id_list');
         if(listIds.includes(JSON.stringify(this.props.exercise._id))){
+            console.log("do nothing")
         }
         else{
-        const newIDlist  = listIds + ',' + JSON.stringify(this.props.exercise._id)
-        localStorage.setItem('id_list', newIDlist)
+            if(listIds === "")
+            {
+                const newIDlist = JSON.stringify(this.props.exercise._id)
+                localStorage.setItem('id_list', newIDlist)
+            }
+            else
+            {
+                const newIDlist = listIds + ',' + JSON.stringify(this.props.exercise._id)
+                localStorage.setItem('id_list', newIDlist)
+            }
         }
     }
 
     del(e){
         e.preventDefault();
-            console.log(localStorage.getItem('id_list'))
-            console.log(JSON.stringify(this.props.exercise._id))
-            const listIds = localStorage.getItem('id_list');
-            if(listIds.includes(JSON.stringify(this.props.exercise._id))){
-                console.log("yes")
-                const newIDlist  = listIds.replace(JSON.stringify(this.props.exercise._id)+',','')
-                console.log(newIDlist)
-                localStorage.setItem('id_list', newIDlist)
-                this.setState({newItem : "change"})
-               this.handlerhere()
-            }
+
+        const listIds = localStorage.getItem('id_list');
+        if(listIds.includes(JSON.stringify(this.props.exercise._id)+',')){
+            const newIDlist  = listIds.replace((JSON.stringify(this.props.exercise._id)+','),'')
+            localStorage.setItem('id_list', newIDlist)
+            this.handlerhere()
         }
+        else if(listIds.includes(','+JSON.stringify(this.props.exercise._id))){
+            const newIDlist  = listIds.replace((','+JSON.stringify(this.props.exercise._id)),'')
+            localStorage.setItem('id_list', newIDlist)
+            this.handlerhere()
+        }
+        else if(listIds.includes(JSON.stringify(this.props.exercise._id))){
+            const newIDlist  = listIds.replace((JSON.stringify(this.props.exercise._id)),'')
+            localStorage.setItem('id_list', newIDlist)
+            this.handlerhere()
+        }
+    }
+
     handlerhere(){
-        console.log("hello")
-        this.props.handler()
-        
+        this.props.handler()     
     }
 
    render() {
 
-    const isLoggedIn = this.state.isLoggedIn;
     let button;
     if (this.props.val === "Add") {
-      button = <td><button onClick={this.add} >Add</button></td>
+      button = <td><button onClick={this.add} className="btn btn-outline-dark" >Add</button></td>
     } 
     if(this.props.val === "del"){
-      button = <td><button onClick={this.del} >Del</button></td>
+      button = <td><button onClick={this.del} className="btn btn-outline-dark" >Del</button></td>
     }
 
     return (

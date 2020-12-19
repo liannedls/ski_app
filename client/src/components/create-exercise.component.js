@@ -29,7 +29,7 @@ export default class CreateExercise extends Component {
       skill: "Beginner",
       age: "Any",
       num: 5, 
-      textVal: "Airplane"
+      textVal: ""
     }
     
   }
@@ -61,7 +61,6 @@ export default class CreateExercise extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state)
     //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
     axios.get('http://localhost:5000/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
       .then(response => {
@@ -78,8 +77,8 @@ export default class CreateExercise extends Component {
   loadAll(e) {
     e.preventDefault();
 
-    //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/all')
-    axios.get('http://localhost:5000/exercises/all')
+    axios.get('https://frozen-stream-11960.herokuapp.com/exercises/all')
+    //axios.get('http://localhost:5000/exercises/all')
       .then(response => {
         console.log(response.data)
         this.setState({ exercises: response.data })
@@ -90,11 +89,12 @@ export default class CreateExercise extends Component {
       this.setState({loadExercises:true})
       //this.forceUpdate(e);
   }
+
   loadSearch(e) {
     e.preventDefault();
 
-    //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/search')
-    axios.get('http://localhost:5000/exercises/search', {params : {text:this.state.textVal}})
+    axios.get('https://frozen-stream-11960.herokuapp.com/exercises/search')
+    //axios.get('http://localhost:5000/exercises/search', {params : {text:this.state.textVal}})
       .then(response => {
         console.log(response.data)
         this.setState({ exercises: response.data })
@@ -106,7 +106,10 @@ export default class CreateExercise extends Component {
       //this.forceUpdate(e);
   }
 
-  
+  onChangeSearch = event => {
+    this.setState({ textVal: event.target.value });
+  };
+
   render() {
     const loadExercises= this.state.loadExercises;
     return (
@@ -191,27 +194,17 @@ export default class CreateExercise extends Component {
 
         </Row>
         <Row>
-        <button onClick={this.loadAll}>
-          See All
-        </button>
-        <form onClick={this.loadSearch}>
-        <label>
-          <input type="text"  value={this.state.textVal} />
-        </label>
-        <input type="submit" value="Submit Search" />
-      </form>
-          <Col className = "justify-content-center">
-        <div className="form-group ">
-          <input type="submit" value="Create Ski Lesson Plan" className="btn btn-dark" />
-        </div>
-        </Col>
-      </Row>
-      </form>
+          <input onChange={this.onChangeSearch} placeholder="  Enter Search" />
+          <button onClick={this.loadSearch} className="btn btn-dark">Search</button>
+          <button onClick= {this.loadAll} className="btn btn-dark">See All</button>
+          <button onClick={this.onSubmit} type="primary" className="btn btn-dark">Create Ski Lesson Plan</button>
+        </Row>
+        </form>
       
-      </Container>
-      {loadExercises ?
-      <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val = {"Add"}/>
-      : null}
+        </Container>
+        {loadExercises ?
+        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val = {"Add"}/>
+        : null}
       </div>
     )
   }

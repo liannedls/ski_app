@@ -37,12 +37,17 @@
   box-shadow: none;
 }
 
+button{
+  margin: 15px 10px;
+  padding: 0px 0px;
+}
+
 ul.a {
   list-style-type: circle;
 }
 
 h3{
-  text-indent: 5%;
+  text-indent: 1%;
 }
 
 .firsttimer {
@@ -56,4 +61,26 @@ h3{
   color:blue;
   
   text-align: center;
+}
+
+.justify-center{ display:flex; justify-content:center;}
+
+.justify-right{ display:flex; justify-content:right; margin: 0px 20px;}
+
+input{
+  margin: 15px 10px;
+  padding: 0px 0px;
+}
+.search{
+  margin: 0px 0px;
+  padding: 0px 0px;
+}
+
+.search-bar{
+  width: 200%;
+  height: 200%;
+}
+
+h4{
+  color: blueviolet;
 }

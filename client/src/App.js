@@ -11,11 +11,11 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id_list: "string"
+      id_list: "",
+      title:"My Lesson Plan #1"
     };
   }
   componentDidMount(){
-    console.log("hello from App.js")
     localStorage.setItem('id_list', this.state.id_list)
   }
 
