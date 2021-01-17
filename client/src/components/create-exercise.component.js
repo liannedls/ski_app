@@ -114,7 +114,7 @@ export default class CreateExercise extends Component {
     const loadExercises= this.state.loadExercises;
     return (
     <div>
-      <h3>Create a Ski Lesson Plan</h3>
+      <h1 className='justify-center'>Create a Ski Lesson Plan</h1>
       <Container>
         
       <form onSubmit={this.onSubmit} className="">
@@ -191,13 +191,22 @@ export default class CreateExercise extends Component {
               }
           </select>
         </Col>
-
+        <Col>
+        <Row>
+        <Col className='go-button'>
+        <button onClick={this.onSubmit} type="primary" className="btn btn-dark full-button">Go</button>
+        </Col>
+        <Col className='go-button'>
+        <button onClick= {this.loadAll} className="btn btn-dark full-button">See All</button>
+        </Col>
+        </Row>
+        </Col>
         </Row>
         <Row>
+          <Col className = 'justify-left searchfield'>
           <input onChange={this.onChangeSearch} placeholder="  Enter Search" />
           <button onClick={this.loadSearch} className="btn btn-dark">Search</button>
-          <button onClick= {this.loadAll} className="btn btn-dark">See All</button>
-          <button onClick={this.onSubmit} type="primary" className="btn btn-dark">Create Ski Lesson Plan</button>
+        </Col>
         </Row>
         </form>
       
