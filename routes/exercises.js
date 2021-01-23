@@ -27,12 +27,12 @@ router.route('/').get((req, res) => {
       console.log("gets here")
       if(req.query.group ==='Group'){
         console.log("gets here too")
-      Exercise.aggregate([ { $match: {group: { $ne: 'Private'}, skill: req.query.skill}, age: req.query.age}, { $sample: { size : num } }])
+      Exercise.aggregate([ { $match: {group: { $ne: 'Private'}, skill: req.query.skill, age: req.query.age}}, { $sample: { size : num } }])
       .then(exercises => res.json(exercises))
         .catch(err => res.status(400).json('Error: ' + err));
     }    
     if(req.query.group ==='Private'){
-      Exercise.aggregate([ { $match: {group: { $ne: 'Group'},skill: req.query.skill, age: req.query.age}, { $sample: { size : num } }])
+      Exercise.aggregate([ { $match: {group: { $ne: 'Group'},skill: req.query.skill, age: req.query.age}}, { $sample: { size : num } }])
       .then(exercises => res.json(exercises))
         .catch(err => res.status(400).json('Error: ' + err));
     }
