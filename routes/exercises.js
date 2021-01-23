@@ -5,10 +5,61 @@ let Exercise = require('../models/exercise.model');
 router.route('/').get((req, res) => {
   num = parseInt(req.query.num)
   console.log(num);
-  console.log(req.query.age)
-  Exercise.aggregate([ { $match: {$or: [{age: req.query.age, skill: req.query.skill, group: req.query.group},{age: "Any", skill: req.query.skill, group: req.query.group}, {age: req.query.age, skill: req.query.skill, group: "All"}, {age: "Any", skill: req.query.skill, group: req.query.group}]}} , { $sample: { size : num } }])
+  console.log(req.query.group)
+  if(req.query.age ==='Any' && req.query.group ==='All'){
+    Exercise.aggregate([ { $match: {skill: req.query.skill}}, { $sample: { size : num } }])
     .then(exercises => res.json(exercises))
       .catch(err => res.status(400).json('Error: ' + err));
+  }
+  if(req.query.age !=='Any' && req.query.group =='All'){
+    if(req.query.age ==='Adult'){
+      Exercise.aggregate([ { $match: {age: { $ne: 'Children'}, skill: req.query.skill}}, { $sample: { size : num } }])
+      .then(exercises => res.json(exercises))
+        .catch(err => res.status(400).json('Error: ' + err));
+    }    
+    if(req.query.age ==='Children'){
+      Exercise.aggregate([ { $match: {age: { $ne: 'Adult'}, skill: req.query.skill}}, { $sample: { size : num } }])
+      .then(exercises => res.json(exercises))
+        .catch(err => res.status(400).json('Error: ' + err));
+    }
+  }
+  if(req.query.age =='Any' && req.query.group !=='All'){
+      console.log("gets here")
+      if(req.query.group ==='Group'){
+        console.log("gets here too")
+      Exercise.aggregate([ { $match: {group: { $ne: 'Private'}, skill: req.query.skill}}, { $sample: { size : num } }])
+      .then(exercises => res.json(exercises))
+        .catch(err => res.status(400).json('Error: ' + err));
+    }    
+    if(req.query.group ==='Private'){
+      Exercise.aggregate([ { $match: {group: { $ne: 'Group'},skill: req.query.skill}}, { $sample: { size : num } }])
+      .then(exercises => res.json(exercises))
+        .catch(err => res.status(400).json('Error: ' + err));
+    }
+  }  
+  if(req.query.age !=='Any' && req.query.group !=='All'){
+    if(req.query.group ==='Group' && req.query.age ==='Adult'){
+      console.log("gets here too")
+    Exercise.aggregate([ { $match: {age: { $ne: 'Children'}, group: { $ne: 'Private'}, skill: req.query.skill}}, { $sample: { size : num } }])
+    .then(exercises => res.json(exercises))
+      .catch(err => res.status(400).json('Error: ' + err));
+  }    
+  if(req.query.group ==='Private' && req.query.age ==='Adult'){
+    Exercise.aggregate([ { $match: {age: { $ne: 'Children'}, group: { $ne: 'Group'},skill: req.query.skill}}, { $sample: { size : num } }])
+    .then(exercises => res.json(exercises))
+      .catch(err => res.status(400).json('Error: ' + err));
+  }
+  if(req.query.group ==='Group' && req.query.age ==='Children'){
+    Exercise.aggregate([ { $match: {age: { $ne: 'Adult'}, group: { $ne: 'Private'},skill: req.query.skill}}, { $sample: { size : num } }])
+    .then(exercises => res.json(exercises))
+      .catch(err => res.status(400).json('Error: ' + err));
+  }
+  if(req.query.group ==='Private' && req.query.age ==='Children'){
+    Exercise.aggregate([ { $match: {age: { $ne: 'Adult'}, group: { $ne: 'Group'},skill: req.query.skill}}, { $sample: { size : num } }])
+    .then(exercises => res.json(exercises))
+      .catch(err => res.status(400).json('Error: ' + err));
+  }
+}
 });
 
 router.route('/all').get((req, res) => {
