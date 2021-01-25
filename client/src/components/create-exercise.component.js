@@ -18,14 +18,14 @@ export default class CreateExercise extends Component {
     this.loadAll = this.loadAll.bind(this);
     this.loadSearch = this.loadSearch.bind(this);
     this.state = {
-      groups: ['Group', 'All'],
-      skills: ['Beginner', 'Intermediate', 'Advanced', 'First Timer'],
-      ages: ['Any', 'Children'],
+      groups: ['Group', 'Private'],
+      skills: ['Beginner', 'Intermediate', 'Advanced'],
+      ages: ['Adult', 'Children', 'Any'],
       exercisenums: [1,2,3,4,5],
       exercises: [
-        {name : "Malcom", description: "Reynolds", group: "Reynolds", age: "Reynolds", skill: "Reynolds"}
+        {name : "Loading", description: "Loading", group: "Loading", age: "Loading", skill: "Loading"}
       ],
-      group: "All",
+      group: "Group",
       skill: "Beginner",
       age: "Any",
       num: 5, 
@@ -61,8 +61,9 @@ export default class CreateExercise extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    //axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
-    axios.get('http://localhost:5000/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
+    console.log(this.state.age)
+    axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
+    //axios.get('http://localhost:5000/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
       .then(response => {
         console.log(response.data)
         this.setState({ exercises: response.data })
@@ -93,7 +94,7 @@ export default class CreateExercise extends Component {
   loadSearch(e) {
     e.preventDefault();
 
-    axios.get('https://frozen-stream-11960.herokuapp.com/exercises/search')
+    axios.get('https://frozen-stream-11960.herokuapp.com/exercises/search',  {params : {text:this.state.textVal}})
     //axios.get('http://localhost:5000/exercises/search', {params : {text:this.state.textVal}})
       .then(response => {
         console.log(response.data)
@@ -119,9 +120,12 @@ export default class CreateExercise extends Component {
         
       <form onSubmit={this.onSubmit} className="">
       <Row> 
-        <Col>
-        <div className="form-group"> 
+      
+        <Col className='selectorbox'>
+        <Row>
           <label>Group Size </label>
+          </Row>
+          <Row>
           <select ref="groupInput"
               className="form-control"
               value={this.state.group}
@@ -135,10 +139,13 @@ export default class CreateExercise extends Component {
                 })
               }
           </select>
-        </div>
+          </Row>
         </Col>
-        <Col>
-          <label>Skier Skill Level</label>
+        <Col className='selectorbox'>
+        <Row>
+          <label>Skill Level</label>
+          </Row>
+          <Row>
           <select ref="skillInput"
               type="text" 
               className="form-control"
@@ -153,11 +160,13 @@ export default class CreateExercise extends Component {
                 })
               }
           </select>
+          </Row>
         </Col>
-        <Col className="">
-        <div className="form-groups"> 
-        
-          <label>Age </label>
+        <Col className='selectorbox'>
+        <Row>
+          <label>Student Age </label>
+          </Row>
+          <Row>
           <select ref="userInput"
               className="form-control"
               value={this.state.age}
@@ -171,11 +180,13 @@ export default class CreateExercise extends Component {
                 })
               }
           </select>
-
-        </div>
+          </Row>
         </Col>
-        <Col>
-          <label>Number of Exercises</label>
+        <Col className='selectorbox'>
+        <Row>
+          <label># of Exercises</label>
+          </Row>
+          <Row>
           <select ref="exercisenumsInput"
               type="int" 
               className="form-control"
@@ -190,22 +201,20 @@ export default class CreateExercise extends Component {
                 })
               }
           </select>
+          </Row>
         </Col>
-        <Col>
-        <Row>
-        <Col className='go-button'>
+        <Col className='go-button' xs lg="1">
+        
         <button onClick={this.onSubmit} type="primary" className="btn btn-dark full-button">Go</button>
-        </Col>
-        <Col className='go-button'>
-        <button onClick= {this.loadAll} className="btn btn-dark full-button">See All</button>
-        </Col>
-        </Row>
         </Col>
         </Row>
         <Row>
           <Col className = 'justify-left searchfield'>
           <input onChange={this.onChangeSearch} placeholder="  Enter Search" />
           <button onClick={this.loadSearch} className="btn btn-dark">Search</button>
+        </Col>
+        <Col className='seeall-button'  xs lg="1">
+        <button onClick= {this.loadAll} className="btn btn-dark full-button">See All</button>
         </Col>
         </Row>
         </form>
