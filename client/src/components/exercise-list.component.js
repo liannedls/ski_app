@@ -24,11 +24,11 @@ export default class ExerciseList extends Component {
             <tr>
               <th>Name</th>
               <th>Description</th>
-              <th>Group</th>
-              <th>Skill</th>
+              <th>Group Size</th>
+              <th>Skill Level</th>
               <th>Age</th>
               <th>Reference</th>
-              <th>Add to List</th>
+              <th>{this.props.val}</th>
             </tr>
           </thead>
           <tbody>

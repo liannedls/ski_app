@@ -48,27 +48,32 @@ export default class MyList extends Component {
 
         generatePDF(){
           var doc = new jsPDF('p', 'pt');
-          
-          doc.text(20, 20, 'My Lesson Plan')
+          doc.setFont('helvetica')
+          doc.setFontSize(28);
+          doc.setTextColor(100)
+          doc.text(this.state.title, 300, 40, 'center')
 
           var i
          // define the columns we want and their titles
-          const tableColumn = ["Id","2","3","4","5"];
+          const tableColumn = ["Exercise","Description"];
           // define an empty array of rows
           const tableRows = [];
-          doc.setFont('helvetica')
-
+          
           for(i = 0; i < this.state.exercises.length; i++){
-            tableRows.push(Object.values(this.state.exercises[i]).splice(1,5));
+            tableRows.push(Object.values(this.state.exercises[i]).splice(1,2));
           }
           console.log("this is your rows")
           console.log(tableRows)
             // for each ticket pass all its data into an array
               // push each tickcet's info into a row
             // startY is basically margin-top
-            doc.autoTable(tableColumn, tableRows, { startY: 20 });
+            doc.autoTable(tableColumn, tableRows, { startY: 60 });
             // ticket title. and margin-top + margin-left
-          doc.save('demo.pdf')
+            if(this.state.title != null){
+              doc.save(this.state.title+'.pdf')
+            }else{
+              doc.save('untitled.pdf')
+            }
         } 
 
         saveList(string){
@@ -90,6 +95,7 @@ export default class MyList extends Component {
           if(listIds.length >=1 ){
           for(const id of listIds){
             //axios.get('http://localhost:5000/exercises/mylist',{params : {id : id.replace('\"','').replace('\"','')}})
+            console.log(id)
             axios.get('https://frozen-stream-11960.herokuapp.com/exercises/mylist',{params : {id : id.replace('\"','').replace('\"','')}})
               .then(response => {
                 this.setState({exercises:[...this.state.exercises, response.data]}) 
@@ -125,17 +131,19 @@ export default class MyList extends Component {
           <Row  className = 'justify-center'>
             <h1>{this.state.title}</h1>
           </Row>
-          <Row  className = 'justify-center'>
-          <Col className = 'justify-right'>
+          <Row className = 'mylistcontrols'>
+            <Col className='searchfield'>
             <input onChange={this.changeTitle} placeholder="  Enter name" />
             <button onClick={this.saveTitle} className="btn btn-dark">Save Title</button>
+            </Col>
+            <Col className='cleargenerate'>
             <button onClick= {this.clearthis} className="btn btn-dark">Clear List</button>
             <button onClick={this.generatePDF} type="primary" className="btn btn-dark">Generate PDF</button>
-          </Col>
+            </Col>
           </Row>
           </Col>
         </Container>
-        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val={"del"} handler = {this.handler}/>
+        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val={"Delete"} handler = {this.handler}/>
       </div>
     );
   }
