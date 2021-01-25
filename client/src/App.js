@@ -16,7 +16,7 @@ export default class App extends Component {
     };
   }
   componentDidMount(){
-    localStorage.setItem('id_list', this.state.id_list)
+    //localStorage.setItem('id_list', this.state.id_list)
   }
 
   render(){
