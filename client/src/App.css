@@ -22,6 +22,11 @@
   color: #61dafb;
 }
 
+.container {
+  max-width: 2000px;
+  background-color: white;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -44,6 +49,17 @@ button{
 
 ul.a {
   list-style-type: circle;
+  display: inline-block;
+  text-align: left;
+}
+
+h1{
+  font-weight: bold;
+}
+
+h2{
+  padding-top: 20px;
+  font-size: calc(10px + 2vmin);
 }
 
 h3{
@@ -51,21 +67,22 @@ h3{
 }
 
 .firsttimer {
-  
   display: "flex";
   justify-content: center;
   align-items: center;
+  text-align: center;
+  float: left;
+  padding-left: 17%;
+  padding-right: 17%;
 }
 
-.firsttimer h1{
-  color:blue;
-  
-  text-align: center;
+.sub{
+  font-style: italic;
 }
 
 .justify-center{ display:flex; justify-content:center;}
 
-.justify-right{ display:flex; justify-content:right; margin: 0px 20px;}
+.justify-right{ display:flex; justify-content:flex-end; margin: 0px 20px;}
 
 input{
   margin: 15px 10px;
@@ -83,4 +100,95 @@ input{
 
 h4{
   color: blueviolet;
+}
+
+.mylistcontrols{
+  height: 50%;
+  margin-top: 0px;
+}
+
+.searchfield button{
+  margin: 0px 0px;
+  border-radius: 0;
+  display:flex; 
+  justify-content:center;
+}
+
+.searchfield input{
+  margin: 0px 0px;
+}
+
+.go-button{
+  position: relative;
+  
+  margin-right: 10px;
+}
+
+.go-button button{
+  height: 40px;
+  width: 80px; 
+  position: absolute;
+  bottom: 0;
+}
+
+.select{
+  display: flex;
+}
+
+.full-button{
+  display: flex;
+  width: 100%;
+  justify-content:center;
+  text-justify: center;
+}
+
+.selectorbox{
+  margin-right: 10px;
+  margin-left: 10px;
+  min-height: 80px;
+  min-width: 140px;
+}
+
+.selectorbox select{
+  position: absolute;
+  bottom: 15px;
+}
+
+.selectorbox label{
+  font-weight: bolder;
+}
+
+.searchfield{
+  display: flex;
+  width: 100%;
+  padding : 15px;
+}
+
+.searchfield button {
+  width: 98px;
+}
+
+.add{
+  display: flex;
+  margin-top: inherit;
+  margin-left: inherit;
+}
+
+.cleargenerate{
+  display: flex;
+  justify-content:flex-end;
+}
+
+.Mylist h1{
+  padding-bottom: 0px;
+}
+
+.seeall-button button{
+  
+  width: 80px;
+}
+
+.seeall-button{
+  
+  margin-right: 10px;
 }
