@@ -3,13 +3,15 @@ import axios from 'axios';
 //import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col } from 'reactstrap';
-import ExerciseList from './exercise-list.component.js'
+import ExerciseList from './exercise-list.component.js';
+import ReactGA from 'react-ga';
 
 export default class CreateExercise extends Component {
   
   constructor(props) {
     super(props);
     
+    this.handler = this.handler.bind(this)
     this.onChangeGroup = this.onChangeGroup.bind(this);
     this.onChangeSkill = this.onChangeSkill.bind(this);
     this.onChangeAge = this.onChangeAge.bind(this);
@@ -32,8 +34,14 @@ export default class CreateExercise extends Component {
       textVal: ""
     }
     
+    
   }
-
+  handler() {
+    this.setState({
+      someVar: 'some value'
+    })
+    this.componentDidMount();
+  }
   onChangeGroup(e) {
     this.setState({
       group: e.target.value
@@ -61,11 +69,9 @@ export default class CreateExercise extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state.age)
     axios.get('https://frozen-stream-11960.herokuapp.com/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
     //axios.get('http://localhost:5000/exercises/',{params : {group:this.state.group, age:this.state.age, skill:this.state.skill, num:this.state.num}})
       .then(response => {
-        console.log(response.data)
         this.setState({ exercises: response.data })
       })
       .catch((error) => {
@@ -81,7 +87,6 @@ export default class CreateExercise extends Component {
     axios.get('https://frozen-stream-11960.herokuapp.com/exercises/all')
     //axios.get('http://localhost:5000/exercises/all')
       .then(response => {
-        console.log(response.data)
         this.setState({ exercises: response.data })
       })
       .catch((error) => {
@@ -97,7 +102,6 @@ export default class CreateExercise extends Component {
     axios.get('https://frozen-stream-11960.herokuapp.com/exercises/search',  {params : {text:this.state.textVal}})
     //axios.get('http://localhost:5000/exercises/search', {params : {text:this.state.textVal}})
       .then(response => {
-        console.log(response.data)
         this.setState({ exercises: response.data })
       })
       .catch((error) => {
@@ -111,8 +115,14 @@ export default class CreateExercise extends Component {
     this.setState({ textVal: event.target.value });
   };
 
+  componentDidMount(){
+
+  }
+
   render() {
     const loadExercises= this.state.loadExercises;
+    
+    ReactGA.pageview(window.location.pathname + window.location.search);
     return (
     <div>
       <h1 className='justify-center'>Create a Ski Lesson Plan</h1>
@@ -121,26 +131,6 @@ export default class CreateExercise extends Component {
       <form onSubmit={this.onSubmit} className="">
       <Row> 
       
-        <Col className='selectorbox'>
-        <Row>
-          <label>Group Size </label>
-          </Row>
-          <Row>
-          <select ref="groupInput"
-              className="form-control"
-              value={this.state.group}
-              onChange={this.onChangeGroup}>
-                              {
-                this.state.groups.map(function(group) {
-                  return <option 
-                    key={group}
-                    value={group}>{group}
-                    </option>;
-                })
-              }
-          </select>
-          </Row>
-        </Col>
         <Col className='selectorbox'>
         <Row>
           <label>Skill Level</label>
@@ -203,17 +193,18 @@ export default class CreateExercise extends Component {
           </select>
           </Row>
         </Col>
-        <Col className='go-button' xs lg="1">
-        
+        <Col className='selectorbox'>
+        <label style={{color: "white"}}>Find</label>
         <button onClick={this.onSubmit} type="primary" className="btn btn-dark full-button">Go</button>
         </Col>
         </Row>
+        <br></br>
         <Row>
-          <Col className = 'justify-left searchfield'>
+          <Col className = 'searchfield'>
           <input onChange={this.onChangeSearch} placeholder="  Enter Search" />
           <button onClick={this.loadSearch} className="btn btn-dark">Search</button>
         </Col>
-        <Col className='seeall-button'  xs lg="1">
+        <Col className='justify-left seeall-button'>
         <button onClick= {this.loadAll} className="btn btn-dark full-button">See All</button>
         </Col>
         </Row>
@@ -221,7 +212,7 @@ export default class CreateExercise extends Component {
       
         </Container>
         {loadExercises ?
-        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val = {"Add"}/>
+        <ExerciseList exercises = {this.state.exercises} key={this.state.exercises._id} val = {"Add"} handler = {this.handler}/>
         : null}
       </div>
     )

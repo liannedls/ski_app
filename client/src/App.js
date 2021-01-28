@@ -6,6 +6,8 @@ import CreateExercise from "./components/create-exercise.component";
 import FirstTimer from "./components/firsttimer";
 import MyList from "./components/mylist";
 import "./App.css";
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-188241761-1');
 
 export default class App extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ export default class App extends Component {
   }
   componentDidMount(){
     //localStorage.setItem('id_list', this.state.id_list)
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
   render(){

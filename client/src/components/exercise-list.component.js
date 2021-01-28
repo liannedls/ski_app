@@ -6,7 +6,6 @@ export default class ExerciseList extends Component {
 
   constructor(props) {
     super(props)
-
   }
 
   exerciseList() {
@@ -24,7 +23,6 @@ export default class ExerciseList extends Component {
             <tr>
               <th>Name</th>
               <th>Description</th>
-              <th>Group Size</th>
               <th>Skill Level</th>
               <th>Age</th>
               <th>Reference</th>
