@@ -21,11 +21,11 @@ export default class ExerciseList extends Component {
         <table className="table">
           <thead className="thead-dark">
             <tr>
-              <th>Name</th>
+              <th className = "namecol">Name</th>
               <th>Description</th>
               <th>Skill Level</th>
               <th>Age</th>
-              <th>Reference</th>
+              <th>Video</th>
               <th>{this.props.val}</th>
             </tr>
           </thead>
