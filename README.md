@@ -13,6 +13,6 @@ Once the dependencies are installed, you can run  `node server.js` to start the 
 ---
 
 ## License
->You can check out the full license [here](https://github.com/IgorAntun/node-chat/blob/master/LICENSE)
+>You can check out the full license [here](https://github.com/liannedls/ski_app_server/blob/master/LICENSE)
 
 This project is licensed under the terms of the **MIT** license.
